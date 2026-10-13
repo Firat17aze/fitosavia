@@ -4,21 +4,15 @@
 
 #include "DHT.h"
 
-Adafruit_ADS1115 ads; 
+#include "config.h"
 
-// --- CONFIGURACIÓN DE PINES ---
-
-#define DHTPIN 4         // DHT22 conectado al pin D4
-
-#define DHTTYPE DHT22    // Modelo exacto de tu sensor
+Adafruit_ADS1115 ads;
 
 DHT dht(DHTPIN, DHTTYPE);
 
-const int pinAlimentacion = 5; // Pin D5 para enviar energía a la planta (Agujas)
-
 void setup() {
 
-  Serial.begin(115200);
+  Serial.begin(baudiosSerial);
 
   delay(1000); // Freno de 1 segundo para darle tiempo al Monitor Serie de despertar
 
@@ -70,7 +64,7 @@ void loop() {
 
   // 2. Esperar a que la corriente se estabilice en el tejido (100 ms)
 
-  delay(100); 
+  delay(delayEstabilizacionMs);
 
   
 
@@ -106,6 +100,6 @@ void loop() {
 
   // 5. Esperar hasta la siguiente medición (5 segundos para pruebas)
 
-  delay(5000); 
+  delay(intervaloMuestrasMs);
 
 }
